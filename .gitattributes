@@ -1,0 +1,5 @@
+# 저장소에는 항상 LF로 정규화해 저장한다 — Windows 체크아웃에서 .sh 파일에 CRLF가
+# 섞이면 bash가 '\r' 때문에 스크립트를 실행하지 못한다.
+* text=auto
+*.sh text eol=lf
+*.bat text eol=crlf

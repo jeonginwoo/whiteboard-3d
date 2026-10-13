@@ -1,0 +1,10 @@
+# 하네스: verify 로그 (콘솔에는 PASS/FAIL만, 전체 로그는 여기로 오프로딩)
+build/
+
+# 비밀
+.env
+.env.*
+
+# 의존성·산출물
+node_modules/
+dist/
