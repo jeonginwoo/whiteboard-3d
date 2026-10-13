@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D 화이트보드</title>
+    <style>
+      html, body { margin: 0; height: 100%; overflow: hidden; background: #1b1f2a; font-family: system-ui, sans-serif; color: #eceff4; }
+      #app { display: block; width: 100vw; height: 100vh; }
+      .hud { position: fixed; pointer-events: none; text-shadow: 0 1px 2px #000a; font-size: 13px; }
+      #help { top: 12px; left: 12px; line-height: 1.6; opacity: 0.85; }
+      #status { top: 12px; right: 12px; text-align: right; line-height: 1.6; }
+      #crosshair { left: 50%; top: 50%; width: 14px; height: 14px; margin: -9px 0 0 -9px; border: 2px solid #fff8; border-radius: 50%; }
+      #crosshair.reach { border-color: var(--brush, #222); box-shadow: 0 0 0 2px #fff; }
+      #toolbar { bottom: 16px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; align-items: center;
+                 background: #0008; padding: 8px 12px; border-radius: 10px; }
+      .swatch { width: 26px; height: 26px; border-radius: 6px; border: 2px solid #0006; font-size: 11px; display: grid; place-items: center; color: #0009; }
+      .swatch.on { outline: 3px solid #fff; }
+      #tool { margin-left: 10px; min-width: 120px; }
+      #overlay { position: fixed; inset: 0; display: grid; place-items: center; background: #10131bcc; }
+      #overlay.hidden { display: none; }
+      .card { background: #2e3440; padding: 28px 32px; border-radius: 14px; width: min(420px, 90vw); box-shadow: 0 10px 40px #0008; }
+      .card h1 { margin: 0 0 6px; font-size: 22px; }
+      .card p { margin: 0 0 16px; color: #d8dee9; font-size: 14px; line-height: 1.6; }
+      .card input { width: 100%; box-sizing: border-box; padding: 10px; font-size: 15px; border-radius: 8px; border: 1px solid #4c566a; background: #3b4252; color: #eceff4; margin-bottom: 12px; }
+      .card button, .card a { display: block; width: 100%; box-sizing: border-box; padding: 11px; font-size: 15px; border-radius: 8px; border: 0;
+                              text-align: center; text-decoration: none; cursor: pointer; margin-top: 8px; }
+      .card button { background: #88c0d0; color: #2e3440; font-weight: bold; }
+      .card a { background: #4c566a; color: #eceff4; }
+      .card a[hidden] { display: none; }
+    </style>
+  </head>
+  <body>
+    <canvas id="app"></canvas>
+    <div id="help" class="hud">
+      WASD 이동 · Space 점프 · 마우스 시점<br />
+      좌클릭 그리기 · 우클릭 지우기 · 1–8 색 · 휠 굵기<br />
+      V 3인칭(내 몸 보기) · Esc 메뉴
+    </div>
+    <div id="status" class="hud"></div>
+    <div id="crosshair" class="hud"></div>
+    <div id="toolbar" class="hud"></div>
+    <div id="overlay">
+      <div class="card">
+        <h1 id="ov-title">3D 화이트보드</h1>
+        <p id="ov-text">가운데 흰 기둥과 주변 모든 물체, 다른 참가자에게도 낙서할 수 있어요.<br />
+          손이 닿는 거리(3 m)까지만 그려지니 높은 곳은 기둥을 감싼 발판을 밟고 올라가세요.</p>
+        <input id="ov-name" maxlength="16" placeholder="이름" />
+        <button id="ov-start">시작</button>
+        <a id="ov-return" hidden>로비로 돌아가기</a>
+      </div>
+    </div>
+    <script type="module" src="/client/main.ts"></script>
+  </body>
+</html>
