@@ -32,8 +32,9 @@ bash scripts/shot.sh "/?demo"     # look at it: headless screenshot → build/sh
    or late joiners will see a different picture.
 3. The server is a relay: it validates with `parseClientMsg`, keeps the roster and the doodle history,
    and never simulates movement (client-authoritative, as in game-hub).
-4. The lobby contract is game-hub `docs/game-entry-contract.md` (v1) and lives here in `client/lobby-link.ts` only:
+4. The lobby contract is game-hub `docs/game-entry-contract.md` (v3) and lives here in `client/lobby-link.ts` only:
    leave by navigating to `hub_return` exactly as given (opaque — never parse, rebuild, or append to it).
+   `hub_name` / `hub_room` are untrusted hints (display name, room name) — the server re-validates both.
    Never use the `hub_` prefix for this game's own params, and never import game-hub code.
 
 ## Way of working

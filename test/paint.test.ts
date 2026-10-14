@@ -46,7 +46,22 @@ describe('낙서면 크기', () => {
   });
 });
 
-describe('로비 입장 쿼리 (game-hub 계약 v1)', () => {
+describe('로비 입장 쿼리 (game-hub 계약 v3)', () => {
+  it('hub_name · hub_room 을 읽고, 자체 name · room 보다 먼저 쓴다', () => {
+    const l = parseLobbyLink('?room=r1&name=x&hub_return=http%3A%2F%2Fh%2F&hub_name=%20%EC%98%81%ED%9D%AC%20&hub_room=abc234');
+    expect(l).toEqual({ returnUrl: 'http://h/', name: '영희', room: 'abc234' });
+  });
+
+  it('hub_name 은 글자 그대로 — 태그를 해석하지 않는다', () => {
+    expect(parseLobbyLink('?hub_name=%3Cb%3E%EC%B2%A0%EC%88%98%3C%2Fb%3E').name).toBe('<b>철수</b>');
+  });
+
+  it('hub_room 이 비었거나 이상하면 자체 room, 그것도 없으면 main', () => {
+    expect(parseLobbyLink('?hub_room=..%2F..&room=r1').room).toBe('r1');
+    expect(parseLobbyLink('?hub_room=&hub_name=%20%20').room).toBe('main');
+    expect(parseLobbyLink('?hub_room=&hub_name=%20%20').name).toBeNull();
+  });
+
   it('hub_return · name · room 을 읽는다', () => {
     const l = parseLobbyLink('?hub_return=http%3A%2F%2Flocalhost%3A5173%2F&name=%EC%B2%A0%EC%88%98&room=r1');
     expect(l).toEqual({ returnUrl: 'http://localhost:5173/', name: '철수', room: 'r1' });
