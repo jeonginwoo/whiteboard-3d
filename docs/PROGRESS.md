@@ -27,6 +27,7 @@
 | 2026-10-13 | 로비 입장 쿼리 이름 `?return` `?name` `?room` 을 이 저장소가 먼저 정한다 (`client/lobby-link.ts`) | game-hub 에 계약 문서가 아직 없다(game-hub 후보 일감). game-hub 가 다른 이름을 정하면 이 파일 하나만 고친다 |
 | 2026-10-13 | **game-hub 입장 계약 v1 반영** — 위 결정을 대체. 복귀 쿼리는 `hub_return`(옛 `return` 은 읽지 않음), 값은 불투명하게 받아 **그대로** 이동(전에는 `new URL().href` 로 정규화했음 — 계약 MUST 3 위반이라 수정). http(s) 검사만 유지(계약 MAY). `name`·`room` 은 게임 자체 파라미터로 남긴다 — v1 은 플레이어 정보를 넘기지 않으므로 로비는 보내지 않는다 | game-hub `docs/game-entry-contract.md` v1 (game-hub 커밋 12d1880). 이름이 `hub_` 접두어와 겹치지 않아 그대로 둬도 계약 위반이 아니다 |
 | 2026-10-13 | 시각 확인 = game-hub `scripts/shot.sh` 를 포트·파일명만 바꿔 가져오고, 개발 전용 `?demo`(오버레이 숨김 + 고정 시점 + 견본 낙서)를 둔다 | 헤드리스 Chrome 은 키·포인터 락을 못 보내 낙서 렌더링을 눈으로 볼 방법이 없었다. `import.meta.env.DEV` 동적 import 라 배포 번들에 없음(빌드 산출물 grep 으로 확인) |
+| 2026-10-14 | `/next` · `/wrap-up` 은 사용자에게 **한국어로** 답한다 (지시문 자체는 영어 유지) | 사용자 요청. 지시 파일 영어 원칙(결정 2026-10-13)은 지시문 언어에 대한 것이고, 답변 언어는 별개 |
 
 ## 작업 큐 (ralph 루프용)
 
@@ -60,6 +61,11 @@
 - 미해결: <다음 세션으로 넘기는 것 · 확인하지 못한 것>
 - 다음 작업: <구체적으로>
 ```
+
+### 2026-10-14 — `/next` · `/wrap-up` 한국어 답변
+- 완료: `.claude/commands/next.md` · `wrap-up.md` 첫 줄에 한국어 답변 지시 추가. `bash scripts/verify.sh` PASS
+- 미해결: 실제로 한국어로 답하는지는 다음 세션의 `/next` 에서 확인
+- 다음 작업: 사용자 플레이 피드백 반영
 
 ### 2026-10-13 — 하네스 적용 + 첫 판 (요구 1~5)
 - 완료: `harness_default` 코드 프로파일 적용, CLAUDE.md 채움(불변식 4개). `shared/`(월드 배치·물리·프로토콜) · `server/`(Room·ws·배포 진입점) · `client/`(렌더·입력·낙서면·아바타·네트워크·로비 링크). verify 에 typecheck(quick)·unit tests·build(full) 등록, Stop 훅 `CODE_PATHS` 갱신, `scripts/shot.sh` 추가. `bash scripts/verify.sh` 6단계 PASS, 테스트 27개(물리·발판 도달 가능성·프로토콜 검증·Room·실제 ws 연결 2명). 테스트가 모서리 발판 간격 오류(1.35 vs 1.325 m)를 잡아 발판 크기 공식으로 수정. `shot.sh "/?demo"` 로 기둥·바닥·상자·아바타 낙서 렌더 확인, 콘솔 오류 없음. Vite 개발 서버 경유 `/ws` 중계·배포 서버(`npm start`) 정적 파일 + `/ws` 를 node 스크립트로 확인

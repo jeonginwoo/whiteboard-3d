@@ -2,7 +2,7 @@
 description: Start a session — restore state, plan before code
 ---
 
-Start a work session.
+Start a work session. Reply to the user in Korean throughout (status, questions, the plan).
 
 1. Read `docs/PROGRESS.md` — current state, decision log, work queue, 후보 일감.
 2. Run `git log --oneline -5` and `git status` to confirm the state matches PROGRESS.

@@ -2,7 +2,7 @@
 description: End a session — verify, review, record, commit
 ---
 
-End the current session.
+End the current session. Reply to the user in Korean throughout (results, findings, the summary).
 
 1. Run `bash scripts/verify.sh`. If it fails, fix it first — never wrap up red.
 2. For a non-trivial diff, run the `reviewer` agent and resolve BLOCKER/MAJOR findings.
